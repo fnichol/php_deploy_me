@@ -26,8 +26,7 @@ Capistrano::Lastmile.load_named(:wp_config_php) do
   def find_database_passwords(var= :db_password)
     if cmd_if "-f #{shared_path}/config/wp-config.php"
       php_text = capture("cat #{shared_path}/config/wp-config.php")
-      line = php_text.lines.grep /^define\('DB_PASSWORD', '.*'\);$/.first
-      set var.to_s, line.sub(/^define\('DB_PASSWORD', '(.*)'\);$/, '\1')
+      set var.to_s, php_text.grep(/^define\('DB_PASSWORD', '(.*)'\);(\r)?$/){$1}.first
     end
   end
 
@@ -103,7 +102,7 @@ Capistrano::Lastmile.load_named(:wp_config_php) do
       [internal] Copies wp-config.php from shared_path into release_path.
     DESC
     task :cp_config_php, :roles => :app, :except => { :no_release => true } do
-     run "cp #{shared_path}/config/wp-config.php #{release_path}/config/wp-config.php"
+     run "cp #{shared_path}/config/wp-config.php #{release_path}/public/wp-config.php"
     end
 
     desc <<-DESC
