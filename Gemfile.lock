@@ -1,5 +1,7 @@
-PATH
-  remote: /Users/fnichol/Projects/github/capistrano-lastmile
+GIT
+  remote: git://github.com/fnichol/capistrano-lastmile.git
+  revision: 80bcc5ff2111cbce87d80fb1447bd599b1da7890
+  branch: multi-app-type
   specs:
     capistrano-lastmile (0.0.1)
       capistrano (~> 2.5.19)
